@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto - Drop Trail</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header fixo -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">DROP TRAIL</a></h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="produtos.html" class="nav-link active" id="cadastrar-produto-link">Cadastrar Produto</a></li>
+                    <li><a href="#" class="nav-link">Bikes</a></li>
+                    <li><a href="#" class="nav-link">Equipamentos</a></li>
+                    <li><a href="#" class="nav-link">Acessórios</a></li>
+                </ul>
+            </nav>
+            <div class="auth-section">
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                    <a href="cadastro.html" class="btn btn-secondary">Cadastro</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div id="auth-required" class="auth-required" style="display: none;">
+                <div class="auth-message">
+                    <h2>ACESSO RESTRITO</h2>
+                    <p>Você precisa estar logado para cadastrar produtos.</p>
+                    <a href="login.html" class="btn btn-primary">Fazer Login</a>
+                </div>
+            </div>
+
+            <div id="product-form-container" class="form-container" style="display: none;">
+                <div class="form-card">
+                    <h2>CADASTRAR PRODUTO</h2>
+                    <p>Adicione produtos radicais ao catálogo!</p>
+                    
+                    <form id="product-form" class="form">
+                        <div class="form-group">
+                            <label for="product-name">Nome do Produto</label>
+                            <input type="text" id="product-name" name="product-name" required class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-id">ID do Produto (opcional)</label>
+                            <input type="text" id="product-id" name="product-id" class="form-input" placeholder="Será gerado automaticamente se vazio">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">Categoria</label>
+                            <select id="category" name="category" required class="form-input">
+                                <option value="">Selecione a categoria</option>
+                                <option value="bikes">Bikes</option>
+                                <option value="equipamentos">Equipamentos</option>
+                                <option value="acessorios">Acessórios</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quantity">Quantidade</label>
+                            <input type="number" id="quantity" name="quantity" required class="form-input" min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="color">Cor</label>
+                            <input type="text" id="color" name="color" required class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="price">Valor (R$)</label>
+                            <input type="number" id="price" name="price" required class="form-input" min="0" step="0.01">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="image-url">URL da Imagem (opcional)</label>
+                            <input type="url" id="image-url" name="image-url" class="form-input" placeholder="https://exemplo.com/imagem.jpg">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <textarea id="description" name="description" required class="form-input" rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button type="submit" class="btn btn-primary">SALVAR PRODUTO</button>
+                            <button type="button" id="clear-form" class="btn btn-secondary">LIMPAR</button>
+                        </div>
+                    </form>
+                    
+                    <div id="message" class="message" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Lista de Produtos do Usuário -->
+            <div id="user-products-container" class="products-management" style="display: none;">
+                <h3>MEUS PRODUTOS</h3>
+                <div id="user-products-list" class="products-grid">
+                    <!-- Produtos do usuário serão carregados aqui -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Edição -->
+    <div id="edit-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>EDITAR PRODUTO</h3>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <form id="edit-product-form" class="form">
+                <input type="hidden" id="edit-product-key">
+                
+                <div class="form-group">
+                    <label for="edit-product-name">Nome do Produto</label>
+                    <input type="text" id="edit-product-name" required class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-category">Categoria</label>
+                    <select id="edit-category" required class="form-input">
+                        <option value="bikes">Bikes</option>
+                        <option value="equipamentos">Equipamentos</option>
+                        <option value="acessorios">Acessórios</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-quantity">Quantidade</label>
+                    <input type="number" id="edit-quantity" required class="form-input" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-color">Cor</label>
+                    <input type="text" id="edit-color" required class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-price">Valor (R$)</label>
+                    <input type="number" id="edit-price" required class="form-input" min="0" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-image-url">URL da Imagem</label>
+                    <input type="url" id="edit-image-url" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-description">Descrição</label>
+                    <textarea id="edit-description" required class="form-input" rows="4"></textarea>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">SALVAR ALTERAÇÕES</button>
+                    <button type="button" onclick="closeEditModal()" class="btn btn-secondary">CANCELAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Drop Trail - E-commerce Radical. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvtIYw3Jnob4rkxn1D-pC-Ng_OE6zQ-7A",
+            authDomain: "drop-trail.firebaseapp.com",
+            databaseURL: "https://drop-trail-default-rtdb.firebaseio.com",
+            projectId: "drop-trail",
+            storageBucket: "drop-trail.appspot.com",
+            messagingSenderId: "464583414647",
+            appId: "1:464583414647:web:0e3481ce31f36b25bec772",
+            measurementId: "G-X13LT6HLC1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.auth = getAuth(app);
+        window.database = getDatabase(app);
+    </script>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
+

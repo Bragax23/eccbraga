@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Drop Trail</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header fixo -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">DROP TRAIL</a></h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="produtos.html" class="nav-link" id="cadastrar-produto-link">Cadastrar Produto</a></li>
+                    <li><a href="#" class="nav-link">Bikes</a></li>
+                    <li><a href="#" class="nav-link">Equipamentos</a></li>
+                    <li><a href="#" class="nav-link">Acessórios</a></li>
+                </ul>
+            </nav>
+            <div class="auth-section">
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn btn-primary active">Login</a>
+                    <a href="cadastro.html" class="btn btn-secondary">Cadastro</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-card">
+                    <h2>LOGIN</h2>
+                    <p>Entre na sua conta radical!</p>
+                    
+                    <form id="login-form" class="form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" id="password" name="password" required class="form-input">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">ENTRAR</button>
+                        
+                        <div class="form-footer">
+                            <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+                        </div>
+                    </form>
+                    
+                    <div id="message" class="message" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Drop Trail - E-commerce Radical. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvtIYw3Jnob4rkxn1D-pC-Ng_OE6zQ-7A",
+            authDomain: "drop-trail.firebaseapp.com",
+            databaseURL: "https://drop-trail-default-rtdb.firebaseio.com",
+            projectId: "drop-trail",
+            storageBucket: "drop-trail.appspot.com",
+            messagingSenderId: "464583414647",
+            appId: "1:464583414647:web:0e3481ce31f36b25bec772",
+            measurementId: "G-X13LT6HLC1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.auth = getAuth(app);
+        window.database = getDatabase(app);
+    </script>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
+

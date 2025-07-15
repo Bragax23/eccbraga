@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop Trail - E-commerce Radical</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header fixo -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>DROP TRAIL</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="produtos.html" class="nav-link" id="cadastrar-produto-link">Cadastrar Produto</a></li>
+                    <li><a href="#" class="nav-link" onclick="filterByCategory('bikes')">Bikes</a></li>
+                    <li><a href="#" class="nav-link" onclick="filterByCategory('equipamentos')">Equipamentos</a></li>
+                    <li><a href="#" class="nav-link" onclick="filterByCategory('acessorios')">Acessórios</a></li>
+                </ul>
+            </nav>
+            <div class="auth-section">
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+                <div id="auth-buttons" class="auth-buttons">
+                    <a href="login.html" class="btn btn-primary">Login</a>
+                    <a href="cadastro.html" class="btn btn-secondary">Cadastro</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>AVENTURA RADICAL COMEÇA AQUI</h2>
+                    <p>Equipamentos e bikes para os mais extremos</p>
+                    <div class="hero-cta">
+                        <a href="#products" class="btn btn-primary">VER PRODUTOS</a>
+                        <a href="cadastro.html" class="btn btn-secondary">JUNTE-SE A NÓS</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filtros e Pesquisa -->
+            <section class="filters">
+                <div class="filter-container">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Pesquisar produtos..." class="search-input">
+                        <button onclick="searchProducts()" class="btn btn-primary">Buscar</button>
+                    </div>
+                    <div class="category-filters">
+                        <button onclick="filterByCategory('all')" class="btn btn-filter active" id="filter-all">Todos</button>
+                        <button onclick="filterByCategory('bikes')" class="btn btn-filter" id="filter-bikes">Bikes</button>
+                        <button onclick="filterByCategory('equipamentos')" class="btn btn-filter" id="filter-equipamentos">Equipamentos</button>
+                        <button onclick="filterByCategory('acessorios')" class="btn btn-filter" id="filter-acessorios">Acessórios</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Produtos -->
+            <section id="products" class="products">
+                <div id="products-container" class="products-grid">
+                    <!-- Produtos serão carregados dinamicamente aqui -->
+                </div>
+                <div id="loading" class="loading" style="display: none;">
+                    <p>Carregando produtos...</p>
+                </div>
+                <div id="no-products" class="no-products" style="display: none;">
+                    <p>Nenhum produto encontrado.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Drop Trail - E-commerce Radical. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvtIYw3Jnob4rkxn1D-pC-Ng_OE6zQ-7A",
+            authDomain: "drop-trail.firebaseapp.com",
+            databaseURL: "https://drop-trail-default-rtdb.firebaseio.com",
+            projectId: "drop-trail",
+            storageBucket: "drop-trail.appspot.com",
+            messagingSenderId: "464583414647",
+            appId: "1:464583414647:web:0e3481ce31f36b25bec772",
+            measurementId: "G-X13LT6HLC1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.auth = getAuth(app);
+        window.database = getDatabase(app);
+    </script>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
+
